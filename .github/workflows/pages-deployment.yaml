@@ -6,9 +6,11 @@ jobs:
     name: Deploy
     steps:
       - uses: actions/checkout@v4
+      - name: Build
+        run: npm --prefix client run build
       - name: Deploy
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy YOUR_DIST_FOLDER --project-name=example
+          command: pages deploy client/dist/client/browser --project-name=test-cloudflare
